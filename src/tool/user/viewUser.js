@@ -1,29 +1,23 @@
 import {useSelector,useDispatch} from "react-redux"
 import User from "./User";
+import {addUser} from "./userSlice"
 
 export default function ViewCompo() {
-    let users = useSelector(state=> state.userData);
+    let {user,len} = useSelector(state=> state.allUser);
 
     let dispatch = useDispatch()
     
     let handlefun = ()=>{
         let nameArr = ["rakib","sarib","saif","rifat","muid","kawser","arman"];
-
-        let ob = {name:nameArr[users.len-3],roll:users.len+2};
-        dispatch({
-            type:"ADD",
-            payload:{
-                data:ob
-            }
-
-        })
+        let ob = {name:nameArr[len-3],roll:len+2};
+        dispatch(addUser({data:ob}))
     }
 
   return (
     <div>
-        <p>Number of User is : {users.len}</p>
-        {users.user.map(ele=>{
-            return <User ele={ele} key={ele.roll}/>
+        <p>Number of User is : {len}</p>
+        {user.map((ele,ind)=>{
+            return <User key={ind} ele={ele}/>
         })}
 
         <button onClick={handlefun}>click to add user</button>
